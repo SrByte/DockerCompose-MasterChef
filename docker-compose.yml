@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  web:
+    build:
+      context: ./UI/Web.MasterChef
+      dockerfile: Dockerfile
+    ports:
+      - "4430:4430"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:4430
+      - API_URL=http://api:7107 # Adicione a URL da API usando o nome do serviço
+    depends_on:
+      - api
+
+  api:
+    build:
+      context: ./API/Api.MasterChef
+      dockerfile: Dockerfile
+    ports:
+      - "7107:7107"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:7107
